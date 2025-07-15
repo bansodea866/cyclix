@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 
@@ -19,6 +19,7 @@ import Settings from './components/Settings'
 
 function App() {
   const [userProfile, setUserProfile] = useState({
+    user_id: 'test_user_id', // Placeholder for now, will be dynamic with auth
     goal: '',
     motivations: [],
     sexLifeEnhancements: [],
@@ -33,8 +34,44 @@ function App() {
   const [currentStep, setCurrentStep] = useState(0)
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(false)
 
-  const updateProfile = (updates) => {
-    setUserProfile(prev => ({ ...prev, ...updates }))
+  // Load user profile from backend on initial load
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/profile/test_user_id')
+        if (response.ok) {
+          const data = await response.json()
+          setUserProfile(prev => ({ ...prev, ...data.profile }))
+        } else if (response.status === 404) {
+          console.log('No existing profile found, starting fresh.')
+        } else {
+          console.error('Failed to fetch user profile:', response.statusText)
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error)
+      }
+    }
+    fetchUserProfile()
+  }, [])
+
+  const updateProfile = async (updates) => {
+    const updatedProfile = { ...userProfile, ...updates }
+    setUserProfile(updatedProfile)
+
+    try {
+      const response = await fetch('http://localhost:5001/api/profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedProfile),
+      })
+      if (!response.ok) {
+        console.error('Failed to save user profile:', response.statusText)
+      }
+    } catch (error) {
+      console.error('Error saving user profile:', error)
+    }
   }
 
   const nextStep = () => {
@@ -135,4 +172,5 @@ function App() {
 }
 
 export default App
+
 

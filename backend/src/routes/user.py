@@ -1,39 +1,54 @@
-from flask import Blueprint, jsonify, request
-from src.models.user import User, db
+from flask import Blueprint, request, jsonify
+from src.models.health import UserProfile # Corrected import
+from src.main import db
 
-user_bp = Blueprint('user', __name__)
+user_bp = Blueprint("user_bp", __name__)
 
-@user_bp.route('/users', methods=['GET'])
-def get_users():
-    users = User.query.all()
-    return jsonify([user.to_dict() for user in users])
-
-@user_bp.route('/users', methods=['POST'])
-def create_user():
-    
+@user_bp.route("/profile", methods=["POST"])
+def create_or_update_profile():
     data = request.json
-    user = User(username=data['username'], email=data['email'])
-    db.session.add(user)
-    db.session.commit()
-    return jsonify(user.to_dict()), 201
+    user_id = data.get("user_id") # In a real app, this would come from authentication
 
-@user_bp.route('/users/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    user = User.query.get_or_404(user_id)
-    return jsonify(user.to_dict())
+    if not user_id:
+        return jsonify({"message": "User ID is required"}), 400
 
-@user_bp.route('/users/<int:user_id>', methods=['PUT'])
-def update_user(user_id):
-    user = User.query.get_or_404(user_id)
-    data = request.json
-    user.username = data.get('username', user.username)
-    user.email = data.get('email', user.email)
-    db.session.commit()
-    return jsonify(user.to_dict())
+    profile = UserProfile.query.filter_by(user_id=user_id).first() # Use filter_by for user_id
 
-@user_bp.route('/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    user = User.query.get_or_404(user_id)
-    db.session.delete(user)
+    if profile:
+        # Update existing profile
+        profile.goal = data.get("goal", profile.goal)
+        profile.motivations = data.get("motivations", profile.motivations)
+        profile.sex_life_enhancements = data.get("sexLifeEnhancements", profile.sex_life_enhancements)
+        profile.cycle_sex_connection = data.get("cycleSexConnection", profile.cycle_sex_connection)
+        profile.sleep_improvements = data.get("sleepImprovements", profile.sleep_improvements)
+        profile.sleep_hours = data.get("sleepHours", profile.sleep_hours)
+        profile.date_of_birth = data.get("dateOfBirth", profile.date_of_birth)
+        profile.last_period_date = data.get("lastPeriodDate", profile.last_period_date)
+        profile.period_dates = data.get("periodDates", profile.period_dates)
+    else:
+        # Create new profile
+        profile = UserProfile(
+            user_id=user_id,
+            goal=data.get("goal"),
+            motivations=data.get("motivations"),
+            sex_life_enhancements=data.get("sexLifeEnhancements"),
+            cycle_sex_connection=data.get("cycleSexConnection"),
+            sleep_improvements=data.get("sleepImprovements"),
+            sleep_hours=data.get("sleepHours"),
+            date_of_birth=data.get("dateOfBirth"),
+            last_period_date=data.get("lastPeriodDate"),
+            period_dates=data.get("periodDates")
+        )
+        db.session.add(profile)
+
     db.session.commit()
-    return '', 204
+    return jsonify({"message": "Profile updated successfully", "profile": profile.to_dict()}), 200
+
+@user_bp.route("/profile/<user_id>", methods=["GET"])
+def get_profile(user_id):
+    profile = UserProfile.query.filter_by(user_id=user_id).first() # Use filter_by for user_id
+    if profile:
+        return jsonify({"profile": profile.to_dict()}), 200
+    return jsonify({"message": "Profile not found"}), 404
+
+
