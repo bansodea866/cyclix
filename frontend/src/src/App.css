@@ -1,0 +1,302 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Flo App Custom Styles */
+.flo-pink {
+  background-color: #FF6B9D;
+}
+
+.flo-pink-light {
+  background-color: #FFE8F0;
+}
+
+.flo-pink-dark {
+  background-color: #E55A8A;
+}
+
+.flo-text-gray {
+  color: #6B7280;
+}
+
+.flo-text-dark {
+  color: #1F2937;
+}
+
+.flo-progress-bar {
+  background: linear-gradient(to right, #FF6B9D 0%, #FF6B9D var(--progress, 0%), #E5E7EB var(--progress, 0%), #E5E7EB 100%);
+}
+
+.flo-button {
+  @apply bg-pink-500 hover:bg-pink-600 text-white font-medium py-4 px-8 rounded-full transition-colors duration-200;
+}
+
+.flo-button-outline {
+  @apply border-2 border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium py-4 px-6 rounded-2xl transition-colors duration-200;
+}
+
+.flo-card {
+  @apply bg-pink-500 text-white p-6 rounded-3xl;
+}
+
+.flo-card-outline {
+  @apply border-2 border-pink-500 bg-white text-pink-500 p-6 rounded-3xl;
+}
+
+.flo-screen {
+  @apply min-h-screen bg-white flex flex-col;
+}
+
+.flo-container {
+  @apply max-w-md mx-auto px-6 py-8 flex-1 flex flex-col;
+}
+
+.flo-header {
+  @apply flex items-center justify-between mb-8;
+}
+
+.flo-title {
+  @apply text-2xl font-bold text-gray-900 text-center mb-4;
+}
+
+.flo-subtitle {
+  @apply text-gray-600 text-center mb-8;
+}
+
+.flo-option {
+  @apply w-full p-4 mb-4 rounded-2xl border-2 border-gray-200 bg-white text-left transition-all duration-200 hover:border-pink-300;
+}
+
+.flo-option.selected {
+  @apply border-pink-500 bg-pink-50;
+}
+
+.flo-checkbox {
+  @apply w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center;
+}
+
+.flo-checkbox.checked {
+  @apply border-pink-500 bg-pink-500;
+}
+
+.flo-next-button {
+  @apply mt-auto mb-8;
+}
+
+.flo-skip {
+  @apply text-gray-400 text-right mb-4;
+}
+
+.flo-progress {
+  @apply h-1 bg-gray-200 rounded-full mb-8;
+}
+
+.flo-progress-fill {
+  @apply h-full bg-gray-800 rounded-full transition-all duration-300;
+}
+
+.flo-wellbeing-battery {
+  @apply bg-gradient-to-b from-pink-100 to-pink-50 rounded-3xl p-8 text-center;
+}
+
+.flo-battery-icon {
+  @apply mx-auto mb-6;
+}
+
+.flo-feature-grid {
+  @apply grid grid-cols-2 gap-4 mb-8;
+}
+
+.flo-feature-card {
+  @apply bg-white p-6 rounded-3xl text-center border-2 border-transparent transition-all duration-200 hover:border-pink-300;
+}
+
+.flo-feature-card.selected {
+  @apply border-pink-500 bg-pink-50;
+}
+
+.flo-feature-icon {
+  @apply w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center;
+}
+
+.flo-calendar {
+  @apply bg-white rounded-2xl p-4 shadow-sm border border-gray-200;
+}
+
+.flo-calendar-header {
+  @apply flex items-center justify-between mb-4;
+}
+
+.flo-calendar-grid {
+  @apply grid grid-cols-7 gap-1;
+}
+
+.flo-calendar-day {
+  @apply w-10 h-10 flex items-center justify-center rounded-full text-sm transition-colors duration-200;
+}
+
+.flo-calendar-day.today {
+  @apply bg-gray-100;
+}
+
+.flo-calendar-day.period {
+  @apply bg-pink-500 text-white;
+}
+
+.flo-calendar-day.selected {
+  @apply bg-pink-500 text-white;
+}
+
+.flo-calendar-day.selectable:hover {
+  @apply bg-pink-100;
+}
+
+.flo-loading-screen {
+  @apply min-h-screen bg-white flex items-center justify-center;
+}
+
+.flo-loading-content {
+  @apply text-center;
+}
+
+.flo-loading-spinner {
+  @apply w-16 h-16 border-4 border-pink-200 border-t-pink-500 rounded-full animate-spin mx-auto mb-4;
+}
+
+.flo-settings-item {
+  @apply flex items-center justify-between py-4 border-b border-gray-100;
+}
+
+.flo-settings-icon {
+  @apply w-6 h-6 mr-4;
+}
+
+.flo-goal-pill {
+  @apply px-6 py-3 rounded-full text-sm font-medium transition-colors duration-200;
+}
+
+.flo-goal-pill.active {
+  @apply bg-pink-500 text-white;
+}
+
+.flo-goal-pill.inactive {
+  @apply bg-gray-200 text-gray-600;
+}
+
